@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
+# homebrew
+pBrew="/usr/local/sbin"
+export PATH="${pBrew}:$PATH"
+
+# golang
 pGolang="/usr/local/go/bin:$HOME/go/bin"
 export PATH="${pGolang}:$PATH"
