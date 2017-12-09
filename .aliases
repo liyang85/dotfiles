@@ -29,6 +29,7 @@ alias cdnet='cd /etc/sysconfig/network-scripts'
 alias ps='ps aux | head -n1 && ps aux | grep -v grep'
 alias jn='jupyter notebook'
 alias aria='aria2c'
+alias info='info --vi-keys'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -38,19 +39,14 @@ else # macOS `ls`
 	colorflag="-G"
 	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
-
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
-
 # List all files colorized in long format, including dot files
 alias la="ls -AF ${colorflag}"
-
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
-
 # List only hidden files, only work in current dir
 alias l.='ls --color=auto -d .[!.]*'
-
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
 
