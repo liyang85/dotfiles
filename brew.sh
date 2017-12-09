@@ -96,5 +96,8 @@ brew install rename
 # Display directories as trees (with optional color/HTML output)
 brew install tree
 
+# Download with resuming and segmented downloading
+brew install aria2
+
 # Remove outdated versions from the cellar.
 brew cleanup
