@@ -7,7 +7,7 @@ export PATH="${pBrew}:$PATH"
 pCoreutils="$(brew --prefix coreutils)/libexec/gnubin"
 export PATH="${pCoreutils}:$PATH"
 mpCoreutils="$(brew --prefix coreutils)/libexec/gnuman"
-export MANPATH="${mpCoreutils:$MANPATH}"
+export MANPATH="${mpCoreutils}:$MANPATH"
 
 # golang
 pGolang="/usr/local/go/bin:$HOME/go/bin"
