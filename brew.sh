@@ -11,8 +11,6 @@ brew upgrade
 # Install GNU core utilities (those that come with macOS are outdated).
 brew install coreutils
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-pCoreutils="$(brew --prefix coreutils)/libexec/gnubin"
-export PATH="${pCoreutils}:$PATH"
 
 # Install some other useful utilities like `sponge`.
 # brew install moreutils
@@ -95,9 +93,6 @@ brew install rename
 
 # Display directories as trees (with optional color/HTML output)
 brew install tree
-
-# Download with resuming and segmented downloading
-brew install aria2
 
 # Remove outdated versions from the cellar.
 brew cleanup
