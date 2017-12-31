@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # Make vim the default editor.
-export EDITOR='vim';
+os=`uname`
+if [[ ${os} == Darwin ]]; then
+	export EDITOR='mvim -v';
+else
+	export EDITOR='vim';
+fi
 
 # Enable persistent REPL history for `node`.
 # export NODE_REPL_HISTORY=~/.node_history;
