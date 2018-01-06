@@ -78,18 +78,12 @@ set autoread
 " Settings from myself
 " ===== ===== ===== ===== ==== ======
 
-colorscheme desert
 set nu
 set rnu
 set cursorline
 " set cursorcolumn
 " set colorcolumn=80
 
-" After many many times tried, I am sure Consolas is the best font for 
-" displaying Chinese & Latin characters together on macOS
-set guifont=Consolas:h14
-" Only work in GUI Vim
-set linespace=2
 " for Chinese characters
 set formatoptions+=mB
 set linebreak
@@ -101,6 +95,7 @@ set showcmd
 set hlsearch
 set ignorecase
 set smartcase
+set modeline
 
 " set ts+sw will mess up files: it looks good in vim only! 
 " set softtabstop will mix tabs and spaces
@@ -117,6 +112,16 @@ set listchars=nbsp:¬,eol:¶,tab:>-,trail:•,extends:»,precedes:«
 " To solve the 'crontab: temp file must be edited in place' issue on macOS
 " this is the simplest way:
 set backupskip=/tmp/*,/private/tmp/*
+
+" ===== ===== ===== ===== ==== ======
+" Only works in GUI Vim
+" ===== ===== ===== ===== ==== ======
+ 
+colorscheme desert
+" After many many times tried, I am sure Consolas is the best font for 
+" displaying Chinese & Latin characters together on macOS
+set guifont=Consolas:h14
+set linespace=2
 
 " ===== ===== ===== ===== ==== ======
 " Key mappings & Autocommands
@@ -215,3 +220,4 @@ let g:used_javascript_libs = 'jquery'
 
 " z0mbix/vim-shfmt
 " let g:shfmt_fmt_on_save = 1
+
