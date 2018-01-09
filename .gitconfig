@@ -46,6 +46,6 @@
 	name = Li Yang
 	email = li.will.yang@gmail.com
 [push]
-	default = simple
+	default = current
 [credential]
 	helper = cache --timeout=72000
