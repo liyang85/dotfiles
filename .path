@@ -3,11 +3,15 @@
 # homebrew
 pBrew="/usr/local/sbin"
 export PATH="${pBrew}:$PATH"
-# coreutils for macOS
-pCoreutils="$(brew --prefix coreutils)/libexec/gnubin"
-export PATH="${pCoreutils}:$PATH"
-mpCoreutils="$(brew --prefix coreutils)/libexec/gnuman"
-export MANPATH="${mpCoreutils}:$MANPATH"
+
+if [ `uname` == "Darwin" ]; then
+	# coreutils for macOS
+	pCoreutils="$(brew --prefix coreutils)/libexec/gnubin"
+	export PATH="${pCoreutils}:$PATH"
+
+	mpCoreutils="$(brew --prefix coreutils)/libexec/gnuman"
+	export MANPATH="${mpCoreutils}:$MANPATH"
+fi
 
 # golang
 pGolang="/usr/local/go/bin:$HOME/go/bin"
