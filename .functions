@@ -22,7 +22,7 @@
 # Use Git’s colored diff when available
 hash git &>/dev/null;
 if [ $? -eq 0 ]; then
-	function diff() {
+	diff() {
 		git diff --no-index --color-words "$@";
 	}
 fi;
@@ -74,7 +74,7 @@ fi;
 # }
 
 # Run `dig` and display the most useful info
-function digga() {
+digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
@@ -123,7 +123,7 @@ function digga() {
 
 # `s` with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location
-function s() {
+s() {
 	if [ $# -eq 0 ]; then
 		subl .;
 	else
@@ -133,7 +133,7 @@ function s() {
 
 # `v` with no arguments opens the current directory in Vim, otherwise opens the
 # given location
-function v() {
+v() {
 	if [ $# -eq 0 ]; then
 		vim .;
 	else
@@ -143,7 +143,7 @@ function v() {
 
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
-function o() {
+o() {
 	if [ $# -eq 0 ]; then
 		open .;
 	else
@@ -155,11 +155,11 @@ function o() {
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
-function tre() {
+tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-function start_proxy {
+start_proxy() {
     export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
     # for Surge
     export http_proxy='http://127.0.0.1:6152'
@@ -167,28 +167,30 @@ function start_proxy {
     echo 'HTTP proxy started.'
 }
 
-function stop_proxy {
+stop_proxy() {
     unset http_proxy
     unset https_proxy
     echo 'HTTP proxy stopped.'
 }
 
 # Default enable proxy for all command line tools in macOS
-os=`uname`
-if [[ $os == Darwin ]]; then
+if [[ `uname` == "Darwin" ]]; then
 	start_proxy
 fi
 
-# use `mv` instead of `rm`
-function rm {
+# backup before `rm`
+rm() {
 	unalias rm 2>/dev/null
-	trash="/tmp/trash"
+	trash="/tmp/my_trash"
 	[ ! -d ${trash} ] && mkdir -p -m 0777 ${trash}
 	if [[ -d ${trash} && ! -r ${trash} && ! -w ${trash} && ! -x ${trash} ]]; then
-		echo "${trash} existed, but you do NOT have enough permissions."
+		echo -e "\n${trash} existed, but you do NOT have enough permissions. \
+			\nPlease use /bin/rm to instead of rm.\n"
 		exit 2
 	else
-		mv -- "$@" ${trash} 2>/dev/null
-		echo "$# items have been moved to /tmp/trash"
+		# must use `/bin/rm` instead of `rm` here, 
+		# or it will be a recursive rm function call.
+		cp -a -- "$@" ${trash} 2>/dev/null && /bin/rm -rf "$@"
+		echo "$# items have been moved to ${trash}"
 	fi
 }
