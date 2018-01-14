@@ -5,35 +5,28 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin master;
 
 bakDotfiles() {
-	dotfiles=`find . -mindepth 1 -path "./.git" -prune -or -print`
-	bakDir="backup-dotfiles"
+	bakDir="bak-dotfiles"
 	fullBakDir="${HOME}/${bakDir}"
-	
 	[ -d "${fullBakDir}" ] || mkdir -p "${fullBakDir}"
 
-	oldIfs=$IFS
-	# the original value of $IFS are <tab><space><newline>,
-	# but <space> will cause error when filename contains spaces,
-	# so there must change the value of IFS to <newline> only.
-	IFS=$'\n'
-	for i in ${dotfiles}; do
-		# the output of `find .` always like `./found_file`,
-		# so the first 2 characters must be deleted before using it,
-		# and this goal can be achieved by `${var:offset}`
-		homeDotfile="${HOME}/${i:2}"
+	dotfiles="${HOME}/dotfiles.lst"
+	find . -mindepth 1 -path "./.git" -prune -or -print > "${dotfiles}"
 
-		# test condition need to improve
-		if [ -e "${homeDotfile}" ]; then
-			# cp option nee to improve,
-			# `-r` will copy many unwanted files
-			cp -r "${homeDotfile}" "${fullBakDir}"
-		fi
-	done
+	# the output of `find .` always like `./found_file`,
+	# delete the dot at the beginning of every line
+	sed -i 's/^\.//' "${dotfiles}"
+
+	# ${HOME} will be added to the beginning of every line of $dotfiles
+	# in the other words, this would expect the paths to be relative 
+	# to the source location of ${HOME} and would retain the entire
+	# absolute structure under that destination.
+	rsync -a --files-from="${dotfiles}" ${HOME} "${fullBakDir}" &>/dev/null
 
 	bakTime=`date +"%F_%T"`
 	tarName="${fullBakDir}-${bakTime//:/-}.tar.gz"
-	# use `tar -cf test.tar.gz -C src_dir .` to contain all files under
-	# `src_dir` but the directory itself in the archive,
+	
+	# use `tar -cf test.tar.gz -C src_dir .` to contain all files
+	# under `src_dir` but the directory itself in the archive,
 	# note there is a dot at the end of the line.
 	#
 	# `--remove-files` will also try to `rmdir` directory itself,
@@ -41,11 +34,8 @@ bakDotfiles() {
 	# tar will output an error, which can be ignored safely.
 	#
 	tar --remove-files -czf "${tarName}" -C "${fullBakDir}" .
-	echo -e "\nDotfiles have been backuped to ${tarName}"
+	echo -e "\nDotfiles have been backuped to: \n${tarName}"
 	echo -e "\n===== ===== ===== ===== ===== ===== ===== =====\n"
-
-	# restore the original $IFS
-	IFS=$oldIfs
 }
 
 doItMac() {
