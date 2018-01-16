@@ -2,14 +2,17 @@
 
 # Set difference aliases according to OS
 os=`uname`
-if [ $os == Linux ]; then
+if [ "$os" == "Linux" ]; then
 	alias vi='vim'
-fi
-if [[ $os == Darwin ]]; then
-	alias vi='mvim -v'
-	alias vim='mvim -v'
-	alias svi='sudo mvim -v'
-	alias vimdiff='/Applications/MacVim.app/Contents/bin/mvimdiff -v'
+elif [ "$os" == "Darwin" ]; then
+	# After `brew install vim --with-override-system-vi`,
+	# do NOT need to set below vim related aliases any more.
+	#
+	# alias vi='mvim -v'
+	# alias vim='mvim -v'
+	# alias svi='sudo mvim -v'
+	# alias vimdiff='/Applications/MacVim.app/Contents/bin/mvimdiff -v'
+	
 	# GNU which
 	which --version | grep -i "gnu which" &>/dev/null \
 		&& alias which='alias | /usr/local/bin/which --tty-only --read-alias --show-dot --show-tilde'
