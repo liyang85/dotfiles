@@ -42,7 +42,11 @@ brew install gnupg
 
 # MacVim "--with-override-system-vim" needs the full Xcode installed,
 # and not just the command line tools
-brew install macvim --with-python3 --with-lua --with-luajit
+# brew install macvim --with-python3 --with-lua --with-luajit
+#
+# Vim "--with-override-system-vi" can be achieved easily without 
+# full Xcode installation
+brew install vim --with-override-system-vi
 
 brew install grep --with-default-names
 
