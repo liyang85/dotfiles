@@ -23,7 +23,7 @@ bakDotfiles() {
 	rsync -a --files-from="${dotfiles}" ${HOME} "${fullBakDir}" &>/dev/null
 
 	bakTime=`date +"%F_%T"`
-	tarName="${fullBakDir}-${bakTime//:/-}.tar.gz"
+	tarName="${fullBakDir}-${bakTime//[-:]}.tar.gz"
 	
 	# use `tar -cf test.tar.gz -C src_dir .` to contain all files
 	# under `src_dir` but the directory itself in the archive,
