@@ -186,11 +186,26 @@ rm() {
 	if [[ -d ${trash} && ! -r ${trash} && ! -w ${trash} && ! -x ${trash} ]]; then
 		echo -e "\n${trash} existed, but you do NOT have enough permissions. \
 			\nPlease use /bin/rm to instead of rm.\n"
-		exit 2
+		# must use return to instead of exit, 
+		# or the shell which call the function will exit.
+		return 2
 	else
+		# if there are some `(-r|-f|-rf)` options, delete them from $@ and $#
+		for i in $@; do
+			if [[ $# -eq 1 && "$i" == "--version" ]]; then
+				echo "This rm is a function, maybe you need to try '/bin/rm --version'"
+				return 3
+			elif [[ "$i" =~ ^-+.*$ ]]; then
+				shift
+			fi
+		done
+		# echo $@	# for debugging
+		
 		# must use `/bin/rm` instead of `rm` here, 
 		# or it will be a recursive rm function call.
-		cp -a -- "$@" ${trash} 2>/dev/null && /bin/rm -rf "$@"
-		echo "$# items have been moved to ${trash}"
+		cp -af $@ "${trash}" \
+			&& /bin/rm -rf $@ \
+			&& echo "$# items have been moved to ${trash}" \
+			&& echo "Filenames beginning with one or more dashes (-) must remove with '/bin/rm filename'"
 	fi
 }
