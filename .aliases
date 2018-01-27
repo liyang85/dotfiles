@@ -148,3 +148,8 @@ alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Re
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Ansible
+alias asb='ansible'
+alias asbd='ansible-doc'
+alias asbp='ansible-playbook'
