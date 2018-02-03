@@ -41,8 +41,8 @@ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'WolfgangMehner/bash-support'
 Plug 'haya14busa/vim-poweryank'
 Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
+Plug 'vim-airline/vim-airline'
 
 " user customized text object
 Plug 'kana/vim-textobj-user'
