@@ -1,8 +1,9 @@
 set nocp
+" vim: set fdm=marker:
 
-" ===== ===== ===== ===== ==== ======
-" vim-plug plugin manager
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" vim-plug plugin manager {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 " Install vim-plug itself automatically
 " https://github.com/junegunn/vim-plug/wiki/faq#automatic-installation
@@ -14,35 +15,24 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'https://github.com/vim-scripts/VisIncr.git'
-
-" Install `cmake` before YCM on macOS
+" use everyday
+" macOS: Install `cmake` before installing YCM
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'chrisbra/NrrwRgn'
-Plug 'easymotion/vim-easymotion'
-Plug 'godlygeek/tabular'
-Plug 'ppwwyyxx/vim-PinyinSearch'
 Plug 'raimondi/delimitmate'
+Plug 'vim-airline/vim-airline'
+Plug 'junegunn/vim-easy-align'
+Plug 'haya14busa/vim-poweryank'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dhruvasagar/vim-table-mode'
 Plug 'sheerun/vim-polyglot'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'chrisbra/colorizer'
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
-Plug 'WolfgangMehner/bash-support'
-Plug 'haya14busa/vim-poweryank'
+Plug 'chrisbra/NrrwRgn'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'mattn/emmet-vim'
-Plug 'vim-airline/vim-airline'
 
 " user customized text object
 Plug 'kana/vim-textobj-user'
@@ -51,14 +41,37 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'paulhybryant/vim-textobj-path'
 Plug 'jceb/vim-textobj-uri'
 
+" shell
+" Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+
+" front-end development
+Plug 'mattn/emmet-vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'chrisbra/colorizer'
+
+" markdown
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'dhruvasagar/vim-table-mode'
+
+" Chinese
+" Auto detect CJK and Unicode file encodings
+Plug 'mbbill/fencview'
+" search Chinese characters
+Plug 'ppwwyyxx/vim-PinyinSearch'
+
+" Others
+" Produce increasing/decreasing columns of numbers, dates, or daynames
+Plug 'vim-scripts/VisIncr'
+
 call plug#end()
 
 " enable built-in matchit plugin
 " packadd! matchit
 
-" ===== ===== ===== ===== ==== ======
-" Settings from tpope/vim-sensible
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" Settings from tpope/vim-sensible {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 filetype plugin indent on
 syntax enable
@@ -74,9 +87,9 @@ set sidescrolloff=5
 set display+=lastline
 set autoread
 
-" ===== ===== ===== ===== ==== ======
-" Settings from myself
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" Settings from myself {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 set nu
 set rnu
@@ -113,9 +126,9 @@ set listchars=nbsp:¬,eol:¶,tab:>-,trail:•,extends:»,precedes:«
 " this is the simplest way:
 set backupskip=/tmp/*,/private/tmp/*
 
-" ===== ===== ===== ===== ==== ======
-" Only works in GUI Vim
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" Settings for GUI Vim {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
  
 colorscheme desert
 " After many many times tried, I am sure Consolas is the best font for 
@@ -123,9 +136,9 @@ colorscheme desert
 set guifont=Consolas:h14
 set linespace=2
 
-" ===== ===== ===== ===== ==== ======
-" Key mappings & Autocommands
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" Key mappings & AutoCommands {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 " Set augroup
 " https://github.com/terryma/dotfiles/blob/master/.vimrc
@@ -169,9 +182,9 @@ au MyAutoCmd BufWritePost $MYVIMRC source $MYVIMRC
 " Copy current file's Path to the system clipboard
 :nmap <leader>cp :let @+ = expand("%:p")<cr>
 
-" ===== ===== ===== ===== ==== ======
-" Settings for plugins
-" ===== ===== ===== ===== ==== ======
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+" Settings for plugins {{{1
+" ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 " ppwwyyxx/vim-PinyinSearch 
 let g:PinyinSearch_Dict = $HOME . '/.vim/plugged/vim-PinyinSearch/PinyinSearch.dict'
@@ -179,9 +192,9 @@ nnoremap ? :call PinyinSearch()<CR>
 nnoremap <Leader>pn :call PinyinNext()<CR>
 
 " vim-pandoc/vim-pandoc
-" vim-pandoc-syntax is better than built-in markdown syntax highlight.
-" built-in markdown has more beautiful color, but also has errors!
-" set ft=markdown is for snippets expanding.
+" vim-pandoc-syntax is better than built-in markdown syntax highlight,
+" the built-in markdown has more beautiful color, but also has errors!
+" ft=markdown is for snippets expanding.
 au MyAutoCmd BufEnter,BufReadPost,BufNewFile *.md set ft=pandoc.markdown
 let g:pandoc#modules#enabled = ["toc","folding","hypertext"]
 let g:pandoc#folding#level = 4
@@ -220,4 +233,10 @@ let g:used_javascript_libs = 'jquery'
 
 " z0mbix/vim-shfmt
 " let g:shfmt_fmt_on_save = 1
+
+" junegunn/vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
