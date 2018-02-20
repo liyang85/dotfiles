@@ -153,3 +153,8 @@ alias path='echo -e ${PATH//:/\\n}'
 alias asb='ansible'
 alias asbd='ansible-doc'
 alias asbp='ansible-playbook'
+
+# Shadowsocks server
+alias sson='ssserver -c /etc/shadowsocks.json --user=nobody -d start'
+alias ssoff='ssserver -c /etc/shadowsocks.json --user=nobody -d stop'
+alias ssrestart='ssserver -c /etc/shadowsocks.json --user=nobody -d restart'
