@@ -17,7 +17,7 @@ call plug#begin('~/.vim/plugged')
 
 " use everyday
 " macOS: Install `cmake` before installing YCM
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'raimondi/delimitmate'
 Plug 'vim-airline/vim-airline'
