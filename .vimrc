@@ -34,6 +34,11 @@ Plug 'chrisbra/NrrwRgn'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 
+" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Both options are optional. You don't have to install fzf in ~/.fzf
+  " and you don't have to run install script if you use fzf only in Vim.
+
 " user customized text object
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
