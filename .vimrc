@@ -98,6 +98,7 @@ set autoread
 
 set nu
 set rnu
+set nowrap
 set cursorline
 " set cursorcolumn
 " set colorcolumn=80
