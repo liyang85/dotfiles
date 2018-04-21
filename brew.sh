@@ -98,11 +98,14 @@ brew install rename
 # Display directories as trees (with optional color/HTML output)
 brew install tree
 
-# Remove outdated versions from the cellar.
-brew cleanup
-
 # Install less with `\b` meta-character support.
 # Or, we must use `[[:<:]]` and `[[:>:]]` 
 # to match beginning and end of word respectively on macOS
 # https://stackoverflow.com/a/22742371/3025050
 brew install less --with-pcre
+
+# The `ip` command
+brew install iproute2mac
+
+# Remove outdated versions from the cellar.
+brew cleanup
