@@ -9,7 +9,7 @@ if [ "$os" == "Linux" ]; then
 # ===== ===== ===== ===== ===== ===== ===== =====
 
 	alias vi='vim'
-	alias ipt='iptables --line-numbers -vnL'
+	alias iptl='iptables --line-numbers -vnL'
 
 elif [ "$os" == "Darwin" ]; then
 # ===== ===== ===== ===== ===== ===== ===== =====
