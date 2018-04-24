@@ -1,44 +1,34 @@
 #!/usr/bin/env bash
 # vim: set fdm=marker:
 
+os=`uname`
+
+if [ "$os" == "Linux" ]; then
 # ===== ===== ===== ===== ===== ===== ===== =====
-# Set different aliases according to OS {{{1
+# Linux Only {{{1
 # ===== ===== ===== ===== ===== ===== ===== =====
 
-os=`uname`
-if [ "$os" == "Linux" ]; then
 	alias vi='vim'
+	alias ipt='iptables --line-numbers -vnL'
+
 elif [ "$os" == "Darwin" ]; then
+# ===== ===== ===== ===== ===== ===== ===== =====
+# macOS Only {{{1
+# ===== ===== ===== ===== ===== ===== ===== =====
+
+	# Unix classical utilities {{{2
+	# ===== ===== ===== ===== ===== ===== ===== =====
+
 	# After `brew install vim --with-override-system-vi`,
 	# do NOT need to set below vim related aliases any more.
 	#
 	# alias vi='mvim -v'
 	# alias vim='mvim -v'
-	# alias svi='sudo mvim -v'
 	# alias vimdiff='/Applications/MacVim.app/Contents/bin/mvimdiff -v'
-	
+
 	# GNU which
 	which --version | grep -i "gnu which" &>/dev/null \
 		&& alias which='alias | /usr/local/bin/which --tty-only --read-alias --show-dot --show-tilde'
-	alias em='/Applications/Emacs.app/Contents/MacOS/Emacs --no-splash'
-	alias emc='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-	alias ypi='you-get -p /Applications/IINA.app/Contents/MacOS/IINA'
-
-	# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-	# alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
-
-	# Google Chrome
-	alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-	alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
-
-	# Show active network interfaces
-	alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
-
-	# Flush Directory Service cache
-	# alias flushdns="dscacheutil -flushcache && killall -HUP mDNSResponder"
-
-	# Clean up LaunchServices to remove duplicates in the “Open With” menu
-	alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 	# Canonical hex dump; some systems have this symlinked
 	# command -v hd > /dev/null || alias hd="hexdump -C"
@@ -49,10 +39,31 @@ elif [ "$os" == "Darwin" ]; then
 	# macOS has no `sha1sum`, so use `shasum` as a fallback
 	# command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
+	# System management {{{2
+	# ===== ===== ===== ===== ===== ===== ===== =====
+
+	# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+	# alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+
+	# Disable Spotlight
+	# alias spotoff="sudo mdutil -a -i off"
+	# Enable Spotlight
+	# alias spoton="sudo mdutil -a -i on"
+
+	# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+	# alias stfu="osascript -e 'set volume output muted true'"
+	# alias pumpitup="osascript -e 'set volume output volume 100'"
+
 	# JavaScriptCore REPL
 	# jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc";
 	# [ -e "${jscbin}" ] && alias jsc="${jscbin}";
 	# unset jscbin;
+
+	# File management {{{2
+	# ===== ===== ===== ===== ===== ===== ===== =====
+
+	# Clean up LaunchServices to remove duplicates in the “Open With” menu
+	alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 	# Trim new lines and copy to clipboard
 	# alias c="tr -d '\n' | pbcopy"
@@ -77,39 +88,23 @@ elif [ "$os" == "Darwin" ]; then
 	# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
 	alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
 
-	# Disable Spotlight
-	# alias spotoff="sudo mdutil -a -i off"
-	# Enable Spotlight
-	# alias spoton="sudo mdutil -a -i on"
+	# Network management {{{2
+	# ===== ===== ===== ===== ===== ===== ===== =====
 
-	# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
-	# alias stfu="osascript -e 'set volume output muted true'"
-	# alias pumpitup="osascript -e 'set volume output volume 100'"
+	# Show active network interfaces
+	alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+	# Flush Directory Service cache
+	# alias flushdns="dscacheutil -flushcache && killall -HUP mDNSResponder"
 
 fi
 
 # ===== ===== ===== ===== ===== ===== ===== =====
-# For Unix & Linux both shipped commands {{{1
+# Both {{{1
 # ===== ===== ===== ===== ===== ===== ===== =====
 
-# Easier navigation: .., ..., ...., ....., ~ and -
-alias ..="cd .."
-alias ...="cd ../.."
-alias -- -="cd -"
-
-# Often used directories
-alias dl="cd ~/Downloads"
-alias cdnet='cd /etc/sysconfig/network-scripts'
-
-alias ps='ps aux | head -n1 && ps aux | grep -v grep'
-alias info='info --vi-keys'
-
-# Reload the shell (i.e. invoke as a login shell)
-# alias reload="exec ${SHELL} -l"
-
-# Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
-
+# ls {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -126,37 +121,86 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 # List only hidden files, only work in current dir
 alias l.='ls --color=auto -d .[!.]*'
 
+# grep {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# sudo {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
+# Often used dirs {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
+alias dl="cd ~/Downloads"
+alias cdnet='cd /etc/sysconfig/network-scripts'
+alias cdrepo='cd /etc/yum.repos.d'
+
+# Dir navigation: .., ..., and - {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
+alias ..="cd .."
+alias ...="cd ../.."
+alias -- -="cd -"
+
+# Shell environment {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
+
+# Reload the shell (i.e. invoke as a login shell)
+alias relogin="exec ${SHELL} -l"
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# IP addresses {{{2
+alias ips="ip -4 a | grep -E 'inet\b' | awk '{print \$NF\"\t \" \$2}'"
+
+# Others {{{2
+# ===== ===== ===== ===== ===== ===== ===== =====
+
+alias ps='ps aux | head -n1 && ps aux | grep -v grep'
+alias info='info --vi-keys'
+
 # Get week number
 alias week='date +%V'
-
-# IP addresses
-alias ips="ip -4 a | grep -E 'inet\b' | awk '{print \$NF\"\t \" \$2}'"
 
 # ===== ===== ===== ===== ===== ===== ===== =====
 # 3rd party apps {{{1
 # ===== ===== ===== ===== ===== ===== ===== =====
 
-alias jn='jupyter notebook'
 alias aria='aria2c'
 
-# Ansible
-alias asb='ansible'
-alias asbd='ansible-doc'
-alias asbp='ansible-playbook'
+if [ "$os" == "Linux" ]; then
 
-# Shadowsocks server
-alias sson='ssserver -c /etc/shadowsocks.json --user=nobody -d start'
-alias ssoff='ssserver -c /etc/shadowsocks.json --user=nobody -d stop'
-alias ssrestart='ssserver -c /etc/shadowsocks.json --user=nobody -d restart'
+	# Ansible
+	alias asb='ansible'
+	alias asbd='ansible-doc'
+	alias asbp='ansible-playbook'
+
+	# Shadowsocks server
+	alias sson='ssserver -c /etc/shadowsocks.json --user=nobody -d start'
+	alias ssoff='ssserver -c /etc/shadowsocks.json --user=nobody -d stop'
+	alias ssrestart='ssserver -c /etc/shadowsocks.json --user=nobody -d restart'
+
+elif [ "$os" == "Darwin" ]; then
+
+	alias jn='jupyter notebook'
+
+	# Emacs
+	alias em='/Applications/Emacs.app/Contents/MacOS/Emacs --no-splash'
+	alias emc='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+	
+	# you-get uses IINA player to play online videos
+	alias ypi='you-get -p /Applications/IINA.app/Contents/MacOS/IINA'
+
+	# Google Chrome
+	alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+	alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+
+fi
 
 # ===== ===== ===== ===== ===== ===== ===== =====
 # Front-end Development {{{1
