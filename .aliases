@@ -137,6 +137,7 @@ alias sudo='sudo '
 # Often used dirs {{{2
 # ===== ===== ===== ===== ===== ===== ===== =====
 alias dl="cd ~/Downloads"
+alias dtf='cd ~/dotfiles'
 alias cdnet='cd /etc/sysconfig/network-scripts'
 alias cdrepo='cd /etc/yum.repos.d'
 
