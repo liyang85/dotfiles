@@ -3,6 +3,10 @@
 # Make vim the default editor.
 export EDITOR='vim';
 
+# The content of PROMPT_COMMAND variable is executed each time bash prints your prompt. 
+# Here echo is executed with the escape sequence to set the term title.
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"'
+
 # Enable persistent REPL history for `node`.
 # export NODE_REPL_HISTORY=~/.node_history;
 # Allow 32³ entries; the default is 1000.
