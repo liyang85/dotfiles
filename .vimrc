@@ -35,6 +35,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-voom/VOoM'
 
+" The install script must be run with a https_proxy!
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
