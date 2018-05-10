@@ -186,6 +186,11 @@ if [ "$os" == "Linux" ]; then
 	alias ssoff='ssserver -c /etc/shadowsocks.json --user=nobody -d stop'
 	alias ssrestart='ssserver -c /etc/shadowsocks.json --user=nobody -d restart'
 
+	# Keepalived
+	alias kar='systemctl restart keepalived'
+	alias kak='systemctl stop keepalived'
+	alias kas='systemctl status keepalived'
+
 elif [ "$os" == "Darwin" ]; then
 
 	alias jn='jupyter notebook'
