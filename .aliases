@@ -157,7 +157,7 @@ alias relogin="exec ${SHELL} -l"
 alias path='echo -e ${PATH//:/\\n}'
 
 # IP addresses {{{2
-alias ips="ip -4 a | grep -E 'inet\b' | awk '{print \$NF\"\t \" \$2}'"
+alias ips="ip -4 a | grep -E 'inet\b' | awk '{ printf(\"%-9s %s\n\", \$NF, \$2) }'"
 
 # Others {{{2
 # ===== ===== ===== ===== ===== ===== ===== =====
