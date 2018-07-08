@@ -55,10 +55,16 @@ fi;
 #
 config_git_prompt () {
 	source ~/.git-prompt.sh
+
 	GIT_PS1_SHOWDIRTYSTATE=true
-	GIT_PS1_SHOWCOLORHINTS=true
 	GIT_PS1_UNTRACKEDFILES=true
+	GIT_PS1_SHOWUPSTREAM="auto"
+	GIT_PS1_HIDE_IF_PWD_IGNORED=true
+
+	# available only when using __git_ps1 for PROMPT_COMMAND or precmd
 	# PROMPT_COMMAND="__git_ps1 '\u@\h:\w' '\\$ '"
+	# GIT_PS1_SHOWCOLORHINTS=true
+
 	PS1='\n\u@\h \w$(__git_ps1 " (%s)")\n\$ '
 }
 
