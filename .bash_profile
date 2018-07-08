@@ -4,7 +4,8 @@ export PATH="$HOME/bin:$PATH";
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+# for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+for file in ~/.{path,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -49,3 +50,23 @@ fi;
 
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Official git prompt for Bash
+#
+config_git_prompt () {
+	source ~/.git-prompt.sh
+	GIT_PS1_SHOWDIRTYSTATE=true
+	GIT_PS1_SHOWCOLORHINTS=true
+	GIT_PS1_UNTRACKEDFILES=true
+	# PROMPT_COMMAND="__git_ps1 '\u@\h:\w' '\\$ '"
+	PS1='\n\u@\h \w$(__git_ps1 " (%s)")\n\$ '
+}
+
+if [ -f ~/.git-prompt.sh ]; then
+	config_git_prompt
+else
+	wget --output-file ~/.git-prompt.sh \
+		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
+		&& config_git_prompt
+fi
+
