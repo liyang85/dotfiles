@@ -4,8 +4,7 @@ export PATH="$HOME/bin:$PATH";
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-# for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
-for file in ~/.{path,exports,aliases,functions,extra}; do
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -61,11 +60,23 @@ config_git_prompt () {
 	GIT_PS1_SHOWUPSTREAM="auto"
 	GIT_PS1_HIDE_IF_PWD_IGNORED=true
 
-	# available only when using __git_ps1 for PROMPT_COMMAND or precmd
+	# # available only when using __git_ps1 for PROMPT_COMMAND or precmd
 	# PROMPT_COMMAND="__git_ps1 '\u@\h:\w' '\\$ '"
 	# GIT_PS1_SHOWCOLORHINTS=true
 
-	PS1='\n\u@\h \w$(__git_ps1 " (%s)")\n\$ '
+	# # Version 1: one color
+	# PS1='\n\u@\h \w$(__git_ps1 " (%s)")\n\$ '
+
+	# Version 2: colorful
+	PS1="\[${bold}\]\n"; # newline
+	PS1+="\[${red}\]\u"; # username
+	PS1+="\[${white}\]@";
+	PS1+="\[${red}\]\h "; # host
+	PS1+="\[${green}\]\w "; # working directory full path
+	PS1+="\$(__git_ps1 \"\[${blue}\](%s)\")"; # Git repository details
+	PS1+="\n";
+	PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
+	export PS1;
 }
 
 if [ -f ~/.git-prompt.sh ]; then
