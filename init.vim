@@ -42,7 +42,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-voom/VOoM'
 Plug 'glidenote/keepalived-syntax.vim'
+Plug 'w0rp/ale'
 
+" The install script must be run with a https_proxy!
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
@@ -124,6 +126,12 @@ set hlsearch
 set ignorecase
 set smartcase
 set modeline
+
+" Vim-polyglot contains a lang pack (pearofducks/ansible-vim) for ansible,
+" which includes syntax, indent and ftplugin settings.
+" If `smartindent` off (default), a list will get wrong indentation,
+" set it on will fix the problem.
+set smartindent
 
 " set ts+sw will mess up files: it looks good in vim only! 
 " set softtabstop will mix tabs and spaces
@@ -269,4 +277,8 @@ au BufRead,BufNewFile keepalived.conf setlocal ft=keepalived
 " roxma/nvim-completion-manager
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" w0rp/ale
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
