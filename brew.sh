@@ -83,7 +83,13 @@ brew install git
 # brew install git-lfs
 
 # Tools and libraries to manipulate images in many formats
-# brew install imagemagick --with-webp
+brew install imagemagick \
+	--with-fontconfig  \
+	--with-liblqr      \
+	--with-librsvg     \
+	--with-ghostscript \
+	--with-webp        \
+	--with-pango
 
 # Text-based web browser
 # brew install lynx
