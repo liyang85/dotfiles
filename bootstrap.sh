@@ -42,6 +42,10 @@ doItMac() {
 	rsync --exclude ".git/" 		\
 		--exclude ".DS_Store" 		\
 		--exclude ".osx" 		\
+		--exclude ".macos"		\
+		--exclude "brew.sh"		\
+		--exclude "init/"		\
+		--exclude "init.vim"		\
 		--exclude "bootstrap.sh" 	\
 		--exclude "README.md" 		\
 		--exclude "LICENSE-MIT.txt" 	\
@@ -57,6 +61,7 @@ doItLinux() {
 		--exclude "brew.sh"		\
 		--exclude "bin/subl"		\
 		--exclude "init/"		\
+		--exclude "init.vim"		\
 		--exclude "bootstrap.sh" 	\
 		--exclude "README.md" 		\
 		--exclude "LICENSE-MIT.txt" 	\
@@ -93,4 +98,15 @@ elif [[ `uname` == "Linux" ]]; then
 fi
 
 unset bakDotfiles
+
+nvimDir="${HOME}/.config/nvim"
+
+if [[ -d "$nvimDir" ]]; then
+	cp -bf ./init.vim "$nvimDir"
+else
+	mkdir -p "$nvimDir" \
+		&& cp -bf ./init.vim "$nvimDir"
+fi
+
+unset nvimDir
 
