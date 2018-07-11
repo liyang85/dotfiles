@@ -5,6 +5,7 @@ export PATH="$HOME/bin:$PATH";
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+# for file in ~/.{path,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -82,8 +83,13 @@ config_git_prompt () {
 if [ -f ~/.git-prompt.sh ]; then
 	config_git_prompt
 else
-	wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
-		-qO ~/.git-prompt.sh &>/dev/null \
+	wget --output-file ~/.git-prompt.sh \
+		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
 		&& config_git_prompt
+fi
+
+# Kubectl Autocomplete
+if [[ -x "$(command -v kubectl)" ]]; then
+	source <(kubectl completion bash)
 fi
 
