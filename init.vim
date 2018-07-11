@@ -17,13 +17,20 @@ call plug#begin()
 
 " use everyday
 
-" macOS: Install `cmake` before installing YCM
-" CentOS: Install and enable devtoolset-6 from the SCL repo first.
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'roxma/nvim-completion-manager'
+Plug 'ncm2/ncm2'
+" ncm2 requires nvim-yarp
+Plug 'roxma/nvim-yarp'
+" some completion sources
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 
-" I have tried `Shougo/deoplete.nvim`, 
-" but it's complicated and heavy, so I removed it finally.
+" " YCM is very heavy, and its installation is a big trouble!
+" " macOS: Install `cmake` before installing YCM
+" " CentOS: Install and enable devtoolset-6 from the SCL repo first.
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+"
+" I also tried `Shougo/deoplete.nvim`, 
+" but it's complicated and heavy too, so I removed it finally.
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'raimondi/delimitmate'
@@ -156,8 +163,8 @@ set backupskip=/tmp/*,/private/tmp/*
 colorscheme desert
 " After many many times tried, I am sure Consolas is the best font for 
 " displaying Chinese & Latin characters together on macOS
-set guifont=Consolas:h14
-set linespace=2
+" set guifont=Consolas:h14
+" set linespace=2
 
 " ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 " Key mappings & AutoCommands {{{1
@@ -274,9 +281,46 @@ nmap ga <Plug>(EasyAlign)
 " glidenote/keepalived-syntax.vim
 au BufRead,BufNewFile keepalived.conf setlocal ft=keepalived
 
-" roxma/nvim-completion-manager
+" ncm2/ncm2
+"
+" enable ncm2 for all buffer
+autocmd BufEnter * call ncm2#enable_for_buffer()
+"
+" note that must keep noinsert in completeopt, the others is optional
+set completeopt=noinsert,menuone,noselect
+"
+" supress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+"
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+"
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"
+" Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+"  'on_complete': ['ncm2#on_complete#delay', 180,
+"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+au User Ncm2Plugin call ncm2#register_source({
+    \ 'name' : 'css',
+    \ 'priority': 9, 
+    \ 'subscope_enable': 1,
+    \ 'scope': ['css','scss'],
+    \ 'mark': 'css',
+    \ 'word_pattern': '[\w\-]+',
+    \ 'complete_pattern': ':\s*',
+    \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+    \ })
 
 " w0rp/ale
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
