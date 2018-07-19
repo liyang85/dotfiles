@@ -161,10 +161,10 @@ echo -e "${separator}"
 # Part 3: Must-have packages
 # ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+yum clean all
 yum update -y
 yum group install -y base
 yum install -y epel-release
-yum clean all
 
 yum install -y \
 	open-vm-tools   \
@@ -172,7 +172,13 @@ yum install -y \
 	nfs-utils       \
 	tree            \
 	psmisc          \
+	python36	\
 	yum-plugin-list-data
+
+# Install pip
+curl -O https://bootstrap.pypa.io/get-pip.py
+python2 get-pip.py
+python3 get-pip.py
 
 echo -e "${separator}"
 
