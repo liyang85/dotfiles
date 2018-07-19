@@ -9,7 +9,7 @@
 #===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
 wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage \
-	-O nvim
+	-qO nvim &> /dev/null
 
 chmod +x nvim
 chown root:root nvim
@@ -24,7 +24,7 @@ if [ ! -d "${nvimDir}" ]; then
 fi
 if [ ! -e "${nvimCfg}" ]; then 
 	wget https://raw.githubusercontent.com/liyang85/dotfiles/master/init.vim \
-		-O "${nvimCfg}"
+		-qO "${nvimCfg}" &> /dev/null
 fi
 
 # Install the vim-plug plugin manager
