@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
 
+# p  = Path
+# mp = ManPath
+
 # homebrew
 pBrew="/usr/local/sbin"
 export PATH="${pBrew}:$PATH"
 
 if [ `uname` == "Darwin" ]; then
 	# coreutils for macOS
-	pCoreutils="$(brew --prefix coreutils)/libexec/gnubin"
-	export PATH="${pCoreutils}:$PATH"
+	pCoreUtils="$(brew --prefix coreutils)/libexec/gnubin"
+	export PATH="${pCoreUtils}:$PATH"
 
-	mpCoreutils="$(brew --prefix coreutils)/libexec/gnuman"
-	export MANPATH="${mpCoreutils}:$MANPATH"
+	mpCoreUtils="$(brew --prefix coreutils)/libexec/gnuman"
+	export MANPATH="${mpCoreUtils}:$MANPATH"
 fi
 
 # golang
-pGolang="/usr/local/go/bin:$HOME/go/bin"
+pGolang="/usr/local/go/bin:${HOME}/go/bin"
 export PATH="${pGolang}:$PATH"
+
+# my scripts
+pMyScripts="${HOME}/dotfiles/scripts"
+export PATH="${pMyScripts}:$PATH"
+
