@@ -210,7 +210,7 @@ echo -e "${separator}"
 if [ -e "./install_neovim_on_centos.sh" ]; then
 	/bin/sh ./install_neovim_on_centos.sh
 else
-	wget https://raw.githubusercontent.com/liyang85/dotfiles/master/scripts/install_neovim_on_centos.sh
+	wget -q https://raw.githubusercontent.com/liyang85/dotfiles/master/scripts/install_neovim_on_centos.sh &> /dev/null
 	/bin/sh ./install_neovim_on_centos.sh
 fi
 echo -e "${separator}"
