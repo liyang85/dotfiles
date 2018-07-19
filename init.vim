@@ -23,6 +23,7 @@ Plug 'roxma/nvim-yarp'
 " some completion sources
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-ultisnips'
 
 " " YCM is very heavy, and its installation is a big trouble!
 " " macOS: Install `cmake` before installing YCM
@@ -242,15 +243,20 @@ let delimitMate_jump_expansion = 1
 " nnoremap <leader><leader>Y :let g:ycm_auto_trigger=1<CR>
 
 " SirVer/ultisnips
+"
 " For YCM
 " let g:UltiSnipsExpandTrigger = '<c-e>'
-" For NCM
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+"
+" For NCM2
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+"
+" c-j c-k for moving in snippet
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
-" optional
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 
 " netrw (built-in)
 " preview window shown in a vertically split window
