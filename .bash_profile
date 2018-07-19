@@ -80,11 +80,15 @@ config_git_prompt () {
 	export PS1;
 }
 
+if [ ! -x "$(command -v wget)" ]; then
+	yum install -y wget
+fi
+
 if [ -f ~/.git-prompt.sh ]; then
 	config_git_prompt
 else
 	wget -qO ~/.git-prompt.sh \
-		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
+		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh &> /dev/null \
 		&& config_git_prompt
 fi
 
