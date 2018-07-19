@@ -83,7 +83,7 @@ config_git_prompt () {
 if [ -f ~/.git-prompt.sh ]; then
 	config_git_prompt
 else
-	wget -O ~/.git-prompt.sh \
+	wget -qO ~/.git-prompt.sh \
 		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
 		&& config_git_prompt
 fi
