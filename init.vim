@@ -15,23 +15,23 @@ endif
 
 call plug#begin()
 
-" use everyday
+" Use everyday
 
-Plug 'ncm2/ncm2'
-" ncm2 requires nvim-yarp
-Plug 'roxma/nvim-yarp'
-" some completion sources
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-ultisnips'
+" " ncm2 is an upgrade of nvim-completion-manager,
+" " and the old version has been separated to multiple new small plugins.
+" " This structure is good for the developer but the users!
+" " Maybe I will try it when a stable version is released.
+" Plug 'ncm2/ncm2'
+" " ncm2 requires nvim-yarp
+" Plug 'roxma/nvim-yarp'
 
 " " YCM is very heavy, and its installation is a big trouble!
 " " macOS: Install `cmake` before installing YCM
 " " CentOS: Install and enable devtoolset-6 from the SCL repo first.
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-"
-" I also tried `Shougo/deoplete.nvim`, 
-" but it's complicated and heavy too, so I removed it finally.
+
+" Now I think deoplete is the simplest auto-completion solution.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'raimondi/delimitmate'
@@ -217,15 +217,15 @@ au MyAutoCmd BufWritePost $MYVIMRC source $MYVIMRC
 " Settings for plugins {{{1
 " ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-" ppwwyyxx/vim-PinyinSearch 
+" " ppwwyyxx/vim-PinyinSearch 
 " let g:PinyinSearch_Dict = $HOME . '/.vim/plugged/vim-PinyinSearch/PinyinSearch.dict'
 " nnoremap ? :call PinyinSearch()<CR>
 " nnoremap <Leader>pn :call PinyinNext()<CR>
 
-" vim-pandoc/vim-pandoc
-" vim-pandoc-syntax is better than built-in markdown syntax highlight,
-" the built-in markdown has more beautiful color, but also has errors!
-" ft=markdown is for snippets expanding.
+" " vim-pandoc/vim-pandoc
+" " vim-pandoc-syntax is better than built-in markdown syntax highlight,
+" " the built-in markdown has more beautiful color, but also has errors!
+" " ft=markdown is for snippets expanding.
 " au MyAutoCmd BufEnter,BufReadPost,BufNewFile *.md set ft=pandoc.markdown
 " let g:pandoc#modules#enabled = ["toc","folding","hypertext"]
 " let g:pandoc#folding#level = 4
@@ -237,45 +237,37 @@ let delimitMate_expand_cr = 1
 let delimitMate_jump_expansion = 1
 
 " Valloric/YouCompleteMe
-" turn off YCM
+" " turn off YCM
 " nnoremap <leader><leader>y :let g:ycm_auto_trigger=0<CR>
-" turn on YCM
+" " turn on YCM
 " nnoremap <leader><leader>Y :let g:ycm_auto_trigger=1<CR>
 
 " SirVer/ultisnips
-"
-" For YCM
+" Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" " For YCM
 " let g:UltiSnipsExpandTrigger = '<c-e>'
-"
-" For NCM2
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-"
-" c-j c-k for moving in snippet
-" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
 
-" netrw (built-in)
+" netrw (Vim built-in)
 " preview window shown in a vertically split window
 let g:netrw_preview   = 1
 " tree style listing
 let g:netrw_liststyle = 3
-" percentage of the current netrw buffer's window to be used for the new window
+" " percentage of the current netrw buffer's window to be used for the new window
 " let g:netrw_winsize   = 70
 
 " ctrlpvim/ctrlp.vim
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
-" dhruvasagar/vim-table-mode
+" " dhruvasagar/vim-table-mode
 " let g:table_mode_corner='|'
 
-" othree/javascript-libraries-syntax.vim
+" " othree/javascript-libraries-syntax.vim
 " let g:used_javascript_libs = 'jquery'
 
-" z0mbix/vim-shfmt
+" " z0mbix/vim-shfmt
 " let g:shfmt_fmt_on_save = 1
 
 " junegunn/vim-easy-align
@@ -287,48 +279,21 @@ nmap ga <Plug>(EasyAlign)
 " glidenote/keepalived-syntax.vim
 au BufRead,BufNewFile keepalived.conf setlocal ft=keepalived
 
-" ncm2/ncm2
-"
-" enable ncm2 for all buffer
-autocmd BufEnter * call ncm2#enable_for_buffer()
-"
-" note that must keep noinsert in completeopt, the others is optional
-set completeopt=noinsert,menuone,noselect
-"
-" supress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-"
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-"
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-"
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
-"  'on_complete': ['ncm2#on_complete#delay', 180,
-"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-au User Ncm2Plugin call ncm2#register_source({
-    \ 'name' : 'css',
-    \ 'priority': 9, 
-    \ 'subscope_enable': 1,
-    \ 'scope': ['css','scss'],
-    \ 'mark': 'css',
-    \ 'word_pattern': '[\w\-]+',
-    \ 'complete_pattern': ':\s*',
-    \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-    \ })
-
 " w0rp/ale
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+" Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 0
+autocmd InsertEnter * call deoplete#enable()
+"
+" The default binding for vim popup selection is <c-n> , <c-p> besides arrow key.
+" Read some more on `:help popupmenu-keys` or `:help ins-completion`
+"
+" disable deoplete when using vim-multiple-cursors
+function g:Multiple_cursors_before()
+	call deoplete#custom#buffer_option('auto_complete', v:false)
+endfunction
+function g:Multiple_cursors_after()
+	call deoplete#custom#buffer_option('auto_complete', v:true)
+endfunction
