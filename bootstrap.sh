@@ -1,70 +1,84 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "${BASH_SOURCE}")";
+# What is below line meaning?
+# cd "$(dirname "${BASH_SOURCE}")";
 
 git pull origin master;
 
 bakDotfiles() {
-	bakDir="bak-dotfiles"
-	fullBakDir="${HOME}/${bakDir}"
-	[ -d "${fullBakDir}" ] || mkdir -p "${fullBakDir}"
+	fullBakDir="${HOME}/backup_dotfiles"
+	[ -d "${fullBakDir}" ] || mkdir -pv "${fullBakDir}"
 
-	dotfiles="${HOME}/dotfiles.lst"
-	find . -mindepth 1 -path "./.git" -prune -or -print > "${dotfiles}"
+	dotfileList="/tmp/dotfiles.lst"
+	# Genarate a dotfile list file from ~/dotfiles
+	find . -mindepth 1 -path "./.git" -prune -or -print > "${dotfileList}"
 
-	# the output of `find .` always like `./found_file`,
-	# delete the dot at the beginning of every line
-	sed -i 's/^\.//' "${dotfiles}"
+	# The output of `find .` always like `./found_file`,
+	# we need to delete the dot at the beginning of every line
+	sed -i 's/^\.//' "${dotfileList}"
 
-	# ${HOME} will be added to the beginning of every line of $dotfiles
-	# in the other words, this would expect the paths to be relative 
-	# to the source location of ${HOME} and would retain the entire
-	# absolute structure under that destination.
-	rsync -a --files-from="${dotfiles}" ${HOME} "${fullBakDir}" &>/dev/null
+	# ${HOME} will be added to the beginning of every line of ${dotfileList}.
+	# In the other words, below command would make all paths of ${dotfileList}
+	# to be relative to the source location ( ${HOME} ).
+	rsync -a --files-from="${dotfileList}" ${HOME} "${fullBakDir}" &>/dev/null
 
-	bakTime=`date +"%F_%T"`
-	tarName="${fullBakDir}-${bakTime//[-:]}.tar.gz"
-	
-	# use `tar -cf test.tar.gz -C src_dir .` to contain all files
-	# under `src_dir` but the directory itself in the archive,
-	# note there is a dot at the end of the line.
+	# Use `tar -cf test.tar.gz -C src_dir .` to archive all files
+	# under `src_dir` but the directory itself in the archive.
+	# Note: There is a dot (.) at the end of the command line.
 	#
 	# `--remove-files` will also try to `rmdir` directory itself,
-	# because the backup archive saved in the dir, 
+	# because the backup archive saved in the dir,
 	# tar will output an error, which can be ignored safely.
 	#
-	tar --remove-files -czf "${tarName}" -C "${fullBakDir}" .
-	echo -e "\nDotfiles have been backuped to: \n${tarName}"
+	#tar --remove-files -czf "${tarName}" -C "${fullBakDir}" .
+
+	bakTime=`date +"%F_%T"`
+	tarName="${fullBakDir}/${bakTime//[-:]}.tar.gz"
+	tar --exclude "*.tar.gz" -czf "${tarName}" "${fullBakDir}" &>/dev/null
+
+	# Remove all files under the ${fullBakDir} except *.tar.gz files
+	while read backuped_file; do
+		if [ -e "${fullBakDir}/${backuped_file}" ]; then
+			# echo "${fullBakDir}/${backuped_file}"
+			/bin/rm -rf "${fullBakDir}/${backuped_file}"
+		fi
+	done < "${dotfileList}"
+
+	echo -e "\nDotfiles have been backuped to: \n\t${tarName}"
 	echo -e "\n===== ===== ===== ===== ===== ===== ===== =====\n"
 }
 
 doItMac() {
-	rsync --exclude ".git/" 		\
+	rsync \
 		--exclude ".DS_Store" 		\
-		--exclude ".osx" 		\
+		--exclude ".git/" 		\
 		--exclude ".macos"		\
-		--exclude "brew.sh"		\
-		--exclude "init/"		\
-		--exclude "init.vim"		\
-		--exclude "bootstrap.sh" 	\
-		--exclude "README.md" 		\
+		--exclude ".osx" 		\
 		--exclude "LICENSE-MIT.txt" 	\
+		--exclude "README.md" 		\
+		--exclude "bootstrap.sh" 	\
+		--exclude "brew.sh"		\
+		--exclude "init.vim"		\
+		--exclude "init/"		\
+		--exclude "scripts/"		\
 		-avh --no-perms . ~;
 	source ~/.bash_profile;
 }
 
 doItLinux() {
-	rsync --exclude ".git/" 		\
+	rsync \
 		--exclude ".DS_Store" 		\
-		--exclude ".osx" 		\
+		--exclude ".git/" 		\
 		--exclude ".macos"		\
-		--exclude "brew.sh"		\
-		--exclude "bin/subl"		\
-		--exclude "init/"		\
-		--exclude "init.vim"		\
-		--exclude "bootstrap.sh" 	\
-		--exclude "README.md" 		\
+		--exclude ".osx" 		\
 		--exclude "LICENSE-MIT.txt" 	\
+		--exclude "README.md" 		\
+		--exclude "bin/subl"		\
+		--exclude "bootstrap.sh" 	\
+		--exclude "brew.sh"		\
+		--exclude "init.vim"		\
+		--exclude "init/"		\
+		--exclude "scripts/"		\
 		-avh --no-perms . ~;
 	source ~/.bash_profile;
 }
@@ -109,4 +123,3 @@ else
 fi
 
 unset nvimDir
-
