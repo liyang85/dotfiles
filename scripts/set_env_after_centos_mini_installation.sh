@@ -11,7 +11,7 @@
 [ `id -u` -ne 0 ] && echo "Only root can run this script." && exit 1
 
 if [ -z "$http_proxy" ]; then
-	echo 'Set $http_proxy to get a fast speed from GitHub.' && exit 1
+	echo 'Set $http_proxy to get a fast speed from GitHub.' && exit 2
 fi
 
 # ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -47,7 +47,7 @@ upFirstIf() {
 		ONBOOT=yes
 		DNS1=223.5.5.5
 	EOF
-	echo -e "\n${firstIfPath} created."
+	echo -e "\nA new version of ${firstIfPath} created."
 
 	# restart network
 	if [[ "${osVer}" -eq 6 ]]; then
@@ -58,9 +58,11 @@ upFirstIf() {
 
 	# determine if can access internet
 	if ping -c1W3 baidu.com &> /dev/null; then
-		echo "${green}You can access internet.${reset}"
+		echo -e "\n${green}You can access internet.${reset}"
 	else
-		echo "${red}You can NOT access internet.${reset}"
+		echo -e "\n${red}You can NOT access internet. \
+			\nPlease fix it first, then re-run this script.${reset}"
+		exit 3
 	fi
 }
 upFirstIf
@@ -79,8 +81,8 @@ if [[ `getenforce` != "Disabled" ]]; then
 	setenforce 0
 	sed -i.bak -r '/^SELINUX=/c SELINUX=disabled' /etc/selinux/config
 	echo "SELinux disabled."
+	echo -e "${separator}"
 fi
-echo -e "${separator}"
 
 # Disable firewalld/iptables
 if [[ "${osVer}" -eq 6 ]]; then
@@ -163,10 +165,13 @@ echo -e "${separator}"
 
 yum clean all
 yum update -y
+echo -e "${separator}"
+
 yum group install -y base
-yum install -y epel-release
+echo -e "${separator}"
 
 yum install -y \
+	epel-release	\
 	open-vm-tools   \
 	git             \
 	nfs-utils       \
@@ -175,10 +180,15 @@ yum install -y \
 	python36	\
 	yum-plugin-list-data
 
-# Install pip
+echo -e "${separator}"
+
+# Install pip2
+# Python 2.7.9 and later (on the python2 series) include pip2 by default
+# CentOS 7 shipped Python's version is 2.7.5
 curl -O https://bootstrap.pypa.io/get-pip.py
 python2 get-pip.py
-python3 get-pip.py
+# # Python 3.4 and later include pip (pip3 for Python 3) by default
+# python3 get-pip.py
 
 echo -e "${separator}"
 
@@ -201,7 +211,7 @@ installPerlRename() {
 	mkdir -p "${pRenamePath}"
 	git clone https://github.com/ap/rename.git "${pRenamePath}"
 	ln -s "${pRenamePath}/rename" "${localBin}/rename" \
-		&& echo "pRename installed."
+		&& echo -e "\npRename installed."
 }
 installPerlRename
 echo -e "${separator}"
@@ -252,5 +262,6 @@ editSshdCfg() {
 editSshdCfg
 echo -e "${separator}"
 
-echo "${green}All operations finished, enjoy...${reset}"
+echo "${green}All operations finished.${reset}"
+echo "${red}Strongly recommend to restart the system!${reset}"
 
