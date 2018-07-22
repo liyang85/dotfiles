@@ -44,6 +44,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-ragtag'
 Plug 'sheerun/vim-polyglot'
 " Plug 'chrisbra/NrrwRgn'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -145,7 +146,11 @@ set smartindent
 " set softtabstop will mix tabs and spaces
 " Formatting should be the task of the IDE. So, do NOT set them!
 " https://softwareengineering.stackexchange.com/questions/197838/what-are-the-downsides-of-mixing-tabs-and-spaces
+"
+" Number of spaces that a <Tab> in the file counts for.
 " set tabstop=4
+"
+" Number of spaces to use for each step of (auto)indent.
 " set shiftwidth=4
 
 " in insert mode, use `ctrl-v u 00b6` to input utf-8 character ¶ (PARAGRAPH SIGN)
