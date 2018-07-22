@@ -44,6 +44,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
+" https://stackoverflow.com/questions/130734/how-can-one-close-html-tags-in-vim-quickly/144168#144168
 Plug 'tpope/vim-ragtag'
 Plug 'sheerun/vim-polyglot'
 " Plug 'chrisbra/NrrwRgn'
