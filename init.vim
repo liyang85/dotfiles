@@ -41,17 +41,22 @@ Plug 'haya14busa/vim-poweryank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 
-" Use tcomment to replace tpope/vim-commentary,
-" because the latter has an XML compatibility issue:
+" Use tcomment to replace tpope/vim-commentary if you want to re-comment an
+" XML comment, because the latter has an XML compatibility issue:
 " https://github.com/tpope/vim-commentary/issues/65
 " https://www.reddit.com/r/vim/comments/26mszm/what_is_everyones_favorite_commenting_plugin_and/chtviv7
-Plug 'tomtom/tcomment_vim'
+" But tcomment always encodes XML's special character, that's BAD.
+" Plug 'tomtom/tcomment_vim'
 
+Plug 'scrooloose/nerdcommenter'
+
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 " https://stackoverflow.com/questions/130734/how-can-one-close-html-tags-in-vim-quickly/144168#144168
 Plug 'tpope/vim-ragtag'
+
 Plug 'sheerun/vim-polyglot'
 " Plug 'chrisbra/NrrwRgn'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -309,3 +314,7 @@ endfunction
 function g:Multiple_cursors_after()
 	call deoplete#custom#buffer_option('auto_complete', v:true)
 endfunction
+
+" scrooloose/nerdcommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
