@@ -40,7 +40,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'haya14busa/vim-poweryank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-commentary'
+
+" Use tcomment to replace tpope/vim-commentary,
+" because the latter has an XML compatibility issue:
+" https://github.com/tpope/vim-commentary/issues/65
+" https://www.reddit.com/r/vim/comments/26mszm/what_is_everyones_favorite_commenting_plugin_and/chtviv7
+Plug 'tomtom/tcomment_vim'
+
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
