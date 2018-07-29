@@ -113,13 +113,14 @@ fi
 
 unset bakDotfiles
 
-nvimDir="${HOME}/.config/nvim"
-
-if [[ -d "$nvimDir" ]]; then
-	cp -bf ./init.vim "$nvimDir"
-else
-	mkdir -p "$nvimDir" \
-		&& cp -bf ./init.vim "$nvimDir"
-fi
-
-unset nvimDir
+# # I found an easy way to install Vim 8 in CentOS,
+# # so no need to use NeoVim.
+#
+# nvimDir="${HOME}/.config/nvim"
+# if [[ -d "$nvimDir" ]]; then
+# 	cp -bf ./init.vim "$nvimDir"
+# else
+# 	mkdir -p "$nvimDir" \
+# 		&& cp -bf ./init.vim "$nvimDir"
+# fi
+# unset nvimDir
