@@ -216,13 +216,18 @@ installPerlRename() {
 installPerlRename
 echo -e "${separator}"
 
-# Neovim
-if [ -e "./install_neovim_on_centos.sh" ]; then
-	/bin/sh ./install_neovim_on_centos.sh
-else
-	wget -q https://raw.githubusercontent.com/liyang85/dotfiles/master/scripts/install_neovim_on_centos.sh &> /dev/null
-	/bin/sh ./install_neovim_on_centos.sh
-fi
+# # NeoVim
+# if [ -e "./install_neovim_on_centos.sh" ]; then
+# 	/bin/sh ./install_neovim_on_centos.sh
+# else
+# 	wget -q https://raw.githubusercontent.com/liyang85/dotfiles/master/scripts/install_neovim_on_centos.sh &> /dev/null
+# 	/bin/sh ./install_neovim_on_centos.sh
+# fi
+
+# Vim 8
+yum-config-manager --add-repo \
+	https://copr.fedorainfracloud.org/coprs/lantw44/vim-latest/repo/epel-7/lantw44-vim-latest-epel-7.repo
+yum upgrade -y 'vim*'
 echo -e "${separator}"
 
 # ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
