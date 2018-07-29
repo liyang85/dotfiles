@@ -168,7 +168,6 @@ set nowrap
 set cursorline
 " set cursorcolumn
 " set colorcolumn=80
-set background=dark
 
 " for Chinese characters
 set formatoptions+=mB
@@ -216,10 +215,12 @@ set backupskip=/tmp/*,/private/tmp/*
 " ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
  
 colorscheme desert
-" " After many many times tried, I am sure Consolas is the best font for 
-" " displaying Chinese & Latin characters together on macOS
-" set guifont=Consolas:h14
-" set linespace=2
+" set background=dark
+
+" After many many times tried, I am sure Consolas is the best font for 
+" displaying Chinese & Latin characters together on macOS
+set guifont=Consolas:h14
+set linespace=2
 
 " ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 " Key mappings & AutoCommands {{{1
