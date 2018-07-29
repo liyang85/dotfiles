@@ -15,8 +15,14 @@ endif
 
 call plug#begin()
 
-" Use everyday
+" The install script must be run with a https_proxy!
+" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Both options are optional. You don't have to install fzf in ~/.fzf
+  " and you don't have to run install script if you use fzf only in Vim.
 
+" Auto-completion
+"
 " " ncm2 is an upgrade of nvim-completion-manager,
 " " and the old version has been separated to multiple new small plugins.
 " " This structure is good for the developer but the users!
@@ -24,14 +30,32 @@ call plug#begin()
 " Plug 'ncm2/ncm2'
 " " ncm2 requires nvim-yarp
 " Plug 'roxma/nvim-yarp'
-
+"
 " " YCM is very heavy, and its installation is a big trouble!
 " " macOS: Install `cmake` before installing YCM
 " " CentOS: Install and enable devtoolset-6 from the SCL repo first.
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-
+"
 " Now I think deoplete is the simplest auto-completion solution.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Indent line
+"
+" " indentLine has performance issue, see details at:
+" " https://github.com/Yggdroot/indentLine/issues?utf8=%E2%9C%93&q=is%3Aissue+performance
+" Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Comment
+"
+" " Use nerdcommenter or tcomment to replace vim-commentary if you want to 
+" " re-comment an XML comment, because the latter has an XML compatibility issue:
+" "   1. https://github.com/tpope/vim-commentary/issues/65
+" "   2. https://www.reddit.com/r/vim/comments/26mszm/what_is_everyones_favorite_commenting_plugin_and/chtviv7
+" " But tcomment always encodes XML's special character, that's BAD.
+" Plug 'tomtom/tcomment_vim'
+" Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'raimondi/delimitmate'
@@ -40,38 +64,39 @@ Plug 'junegunn/vim-easy-align'
 Plug 'haya14busa/vim-poweryank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
+" Plug 'chrisbra/NrrwRgn'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-voom/VOoM'
+Plug 'w0rp/ale'
 
-" Use tcomment to replace tpope/vim-commentary if you want to re-comment an
-" XML comment, because the latter has an XML compatibility issue:
-" https://github.com/tpope/vim-commentary/issues/65
-" https://www.reddit.com/r/vim/comments/26mszm/what_is_everyones_favorite_commenting_plugin_and/chtviv7
-" But tcomment always encodes XML's special character, that's BAD.
-" Plug 'tomtom/tcomment_vim'
-
-Plug 'scrooloose/nerdcommenter'
-
-" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
-" https://stackoverflow.com/questions/130734/how-can-one-close-html-tags-in-vim-quickly/144168#144168
+"
+" Ragtag is a set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more.
+" This includes a couple of "make last word into a tag pair" maps, 
+" a doctype map (inserts in XML), a "close last tag" map ...
+"
+" Usage looks like this (let `|` mark cursor position) you type:
+"	span|
+" press `CTRL+x SPACE` and you get
+"	<span>|</span>
+" You can also use `CTRL+x ENTER` instead of `CTRL+x SPACE`, and you get
+"	<span>
+"	|
+"	</span>
 Plug 'tpope/vim-ragtag'
+" 
+" This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically 
+" based on the current file, or, in the case the current file is new, blank, 
+" or otherwise insufficient, by looking at other files of the same type in the 
+" current and parent directories. In lieu of adjusting 'softtabstop', 'smarttab' is enabled.
+Plug 'tpope/vim-sleuth'
 
 Plug 'sheerun/vim-polyglot'
-" Plug 'chrisbra/NrrwRgn'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Yggdroot/indentLine'
-Plug 'vim-voom/VOoM'
 Plug 'glidenote/keepalived-syntax.vim'
-Plug 'w0rp/ale'
 
-" The install script must be run with a https_proxy!
-" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  " Both options are optional. You don't have to install fzf in ~/.fzf
-  " and you don't have to run install script if you use fzf only in Vim.
-
-" user customized text object
+" User customized text object
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'Julian/vim-textobj-variable-segment'
@@ -134,6 +159,7 @@ set nowrap
 set cursorline
 " set cursorcolumn
 " set colorcolumn=80
+set background=dark
 
 " for Chinese characters
 set formatoptions+=mB
@@ -154,15 +180,16 @@ set modeline
 " set it on will fix the problem.
 set smartindent
 
-" set ts+sw will mess up files: it looks good in vim only! 
-" set softtabstop will mix tabs and spaces
+" set 'ts' and 'sw' will mess up files: it only looks good in vim! 
+" set 'softtabstop' will mix tabs and spaces.
+"
 " Formatting should be the task of the IDE. So, do NOT set them!
 " https://softwareengineering.stackexchange.com/questions/197838/what-are-the-downsides-of-mixing-tabs-and-spaces
 "
-" Number of spaces that a <Tab> in the file counts for.
+" " Number of spaces that a <Tab> in the file counts for.
 " set tabstop=4
 "
-" Number of spaces to use for each step of (auto)indent.
+" " Number of spaces to use for each step of (auto)indent.
 " set shiftwidth=4
 
 " in insert mode, use `ctrl-v u 00b6` to input utf-8 character ¶ (PARAGRAPH SIGN)
@@ -315,6 +342,9 @@ function g:Multiple_cursors_after()
 	call deoplete#custom#buffer_option('auto_complete', v:true)
 endfunction
 
-" scrooloose/nerdcommenter
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+" " scrooloose/nerdcommenter
+" " Add spaces after comment delimiters by default
+" let g:NERDSpaceDelims = 1
+
+" nathanaelkane/vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
