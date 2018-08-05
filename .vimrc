@@ -45,6 +45,26 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+" Auto-close (tag, parenthesis, bracket, brace)
+"
+" Ragtag is a set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more.
+" This includes a couple of "make last word into a tag pair" maps, 
+" a doctype map (inserts in XML), a "close last tag" map ...
+"
+" Usage looks like this (let `|` mark cursor position) you type:
+"	span|
+" press `CTRL+x SPACE` and you get
+"	<span>|</span>
+" You can also use `CTRL+x ENTER` instead of `CTRL+x SPACE`, and you get
+"	<span>
+"	|
+"	</span>
+Plug 'tpope/vim-ragtag'
+Plug 'raimondi/delimitmate'
+"
+" " vim-closetag can't work with httpd.conf
+" Plug 'alvan/vim-closetag'
+
 " Indent line
 "
 " " indentLine has performance issue, see details at:
@@ -64,7 +84,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-commentary'
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'raimondi/delimitmate'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/vim-easy-align'
 Plug 'haya14busa/vim-poweryank'
@@ -78,20 +97,6 @@ Plug 'w0rp/ale'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
-"
-" Ragtag is a set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more.
-" This includes a couple of "make last word into a tag pair" maps, 
-" a doctype map (inserts in XML), a "close last tag" map ...
-"
-" Usage looks like this (let `|` mark cursor position) you type:
-"	span|
-" press `CTRL+x SPACE` and you get
-"	<span>|</span>
-" You can also use `CTRL+x ENTER` instead of `CTRL+x SPACE`, and you get
-"	<span>
-"	|
-"	</span>
-Plug 'tpope/vim-ragtag'
 " 
 " This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically 
 " based on the current file, or, in the case the current file is new, blank, 
