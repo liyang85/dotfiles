@@ -361,3 +361,10 @@ endfunction
 let g:indent_guides_enable_on_vim_startup = 1
 " let g:indent_guides_guide_size = 1
 
+" " roxma/vim-hug-neovim-rpc
+" " Must execute `pip2 install -U neovim` first!
+" " Use `:echo neovim_rpc#serveraddr()` to test the installation,
+" " It should print something like `127.0.0.1:51359`.
+" " See more details at https://github.com/roxma/vim-hug-neovim-rpc
+" set pyxversion=2
+
