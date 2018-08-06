@@ -183,10 +183,10 @@ yum install -y \
 echo -e "${separator}"
 
 # Install pip2
-# Python 2.7.9 and later (on the python2 series) include pip2 by default
-# CentOS 7 shipped Python's version is 2.7.5
-curl -O https://bootstrap.pypa.io/get-pip.py
-python2 get-pip.py
+# Python 2.7.9 and later (on the python2 series) include pip2 by default,
+# but CentOS 7 shipped Python's version is 2.7.5
+curl -fLo ~/get-pip.py https://bootstrap.pypa.io/get-pip.py
+python2 ~/get-pip.py
 # # Python 3.4 and later include pip (pip3 for Python 3) by default
 # python3 get-pip.py
 
