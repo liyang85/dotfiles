@@ -131,8 +131,8 @@ Plug 'mattn/emmet-vim'
 
 " Chinese
 "
-" Auto detect CJK and Unicode file encodings
-Plug 'mbbill/fencview'
+" " Auto detect CJK and Unicode file encodings
+" Plug 'mbbill/fencview'
 " " search Chinese characters
 " Plug 'ppwwyyxx/vim-PinyinSearch'
 
@@ -344,8 +344,21 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 0
-autocmd InsertEnter * call deoplete#enable()
+let g:deoplete#enable_at_startup = 1
+"
+" " The help doc says this reduces almost 20ms startup time,
+" " but it's not true in my test.
+" let g:python3_host_prog = '/usr/bin/python3'
+"
+" " Enable deoplete when InsertEnter will cause Vim be slow!
+" autocmd InsertEnter * call deoplete#enable()
+"
+" Q: deoplete cannot complete filename after "=".
+" A: 'isfname' contains "=".  You should remove it.
+set isfname-==
+"
+" close the preview window after completion is done
+autocmd CompleteDone * silent! pclose!
 "
 " The default binding for vim popup selection is <c-n> , <c-p> besides arrow key.
 " Read some more on `:help popupmenu-keys` or `:help ins-completion`
