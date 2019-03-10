@@ -15,14 +15,39 @@ endif
 
 call plug#begin()
 
+" fzf {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " The install script must be run with a https_proxy!
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
   " and you don't have to run install script if you use fzf only in Vim.
 
-" Auto-completion
-"
+" Must-have plugins {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'vim-airline/vim-airline'
+Plug 'junegunn/vim-easy-align'
+Plug 'haya14busa/vim-poweryank'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
+" Plug 'chrisbra/NrrwRgn'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-voom/VOoM'
+Plug 'w0rp/ale'
+
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+" 
+" This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically 
+" based on the current file, or, in the case the current file is new, blank, 
+" or otherwise insufficient, by looking at other files of the same type in the 
+" current and parent directories. In lieu of adjusting 'softtabstop', 'smarttab' is enabled.
+Plug 'tpope/vim-sleuth'
+
+" Auto-completion {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " " ncm2 is an upgrade of nvim-completion-manager,
 " " and the old version has been separated to multiple new small plugins.
 " " This structure is good for the developer but the users!
@@ -45,8 +70,8 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" Auto-close (tag, parenthesis, bracket, brace)
-"
+" Auto-close (tag, parenthesis, bracket, brace) {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " Ragtag is a set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more.
 " This includes a couple of "make last word into a tag pair" maps, 
 " a doctype map (inserts in XML), a "close last tag" map ...
@@ -65,15 +90,15 @@ Plug 'raimondi/delimitmate'
 " " vim-closetag can't work with httpd.conf
 " Plug 'alvan/vim-closetag'
 
-" Indent line
-"
+" Indent line {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " " indentLine has performance issue, see details at:
 " " https://github.com/Yggdroot/indentLine/issues?utf8=%E2%9C%93&q=is%3Aissue+performance
 " Plug 'Yggdroot/indentLine'
 Plug 'nathanaelkane/vim-indent-guides'
 
-" Comment
-"
+" Comment {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " " Use nerdcommenter or tcomment to replace vim-commentary if you want to 
 " " re-comment an XML comment, because the latter has an XML compatibility issue:
 " "   1. https://github.com/tpope/vim-commentary/issues/65
@@ -83,60 +108,46 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'vim-airline/vim-airline'
-Plug 'junegunn/vim-easy-align'
-Plug 'haya14busa/vim-poweryank'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
-" Plug 'chrisbra/NrrwRgn'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-voom/VOoM'
-Plug 'w0rp/ale'
-
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-vinegar'
-" 
-" This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically 
-" based on the current file, or, in the case the current file is new, blank, 
-" or otherwise insufficient, by looking at other files of the same type in the 
-" current and parent directories. In lieu of adjusting 'softtabstop', 'smarttab' is enabled.
-Plug 'tpope/vim-sleuth'
-
-Plug 'sheerun/vim-polyglot'
-Plug 'glidenote/keepalived-syntax.vim'
-
-" User customized text objects
+" User customized text objects {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'paulhybryant/vim-textobj-path'
 Plug 'jceb/vim-textobj-uri'
 
-" " Shell
-" Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
-
-" Front-end development
-"
+" Front-end development {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 Plug 'mattn/emmet-vim'
 " Plug 'othree/javascript-libraries-syntax.vim'
 " Plug 'chrisbra/colorizer'
 
-" Markdown
+" Programming language syntax plugins {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
+" All in one {{{3
+Plug 'sheerun/vim-polyglot'
 "
+" Shell {{{3
+" Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+"
+" Keepalived {{{3
+Plug 'glidenote/keepalived-syntax.vim'
+"
+" Markdown {{{3
+" ===== ===== ===== ===== ===== ===== ===== =====
 " Plug 'vim-pandoc/vim-pandoc'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'dhruvasagar/vim-table-mode'
 
-" Chinese
-"
+" Chinese {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " " Auto detect CJK and Unicode file encodings
 " Plug 'mbbill/fencview'
 " " search Chinese characters
 " Plug 'ppwwyyxx/vim-PinyinSearch'
 
-" Others
+" Others {{{2
+" ===== ===== ===== ===== ===== ===== ===== =====
 " Produce increasing/decreasing columns of numbers, dates, or daynames
 Plug 'vim-scripts/VisIncr'
 
