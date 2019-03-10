@@ -382,10 +382,10 @@ autocmd CompleteDone * silent! pclose!
 " Read some more on `:help popupmenu-keys` or `:help ins-completion`
 "
 " disable deoplete when using vim-multiple-cursors
-function g:Multiple_cursors_before()
+function! g:Multiple_cursors_before()
   call deoplete#custom#buffer_option('auto_complete', v:false)
 endfunction
-function g:Multiple_cursors_after()
+function! g:Multiple_cursors_after()
   call deoplete#custom#buffer_option('auto_complete', v:true)
 endfunction
 
